@@ -16,7 +16,7 @@ var timeInterval;
 var timeEl = document.querySelector(".time");
 
 
-var secondsLeft = 35;
+var secondsLeft = 30;
 
 function setTime() {
   updateTime();
