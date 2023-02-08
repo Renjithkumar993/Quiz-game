@@ -1,10 +1,14 @@
 
-var errorMsg = new Audio('negative_beeps-6008.mp3');
-var correctMsg = new Audio("correct-2-46134.mp3");
-var startClick = new Audio("big-impact-7054.mp3");
-var clicks = new Audio("interface-124464.mp3");
+var errorMsg = new Audio('./assets/negative_beeps-6008.mp3');
+var correctMsg = new Audio("./assets/correct-2-46134.mp3");
+var clicks = new Audio("./assets/interface-124464.mp3");
 
 var score = 0;
+
+
+function updateTime() {
+  timeEl.textContent = "Time :" + " " + secondsLeft;
+}
 
 var timeInterval;
 
@@ -15,21 +19,21 @@ var timeEl = document.querySelector(".time");
 var secondsLeft = 35;
 
 function setTime() {
-  timeEl.textContent = "Time :" + " " + secondsLeft;
+  updateTime();
   timeInterval = setInterval(() => {
-    if ( secondsLeft > 0){
-    secondsLeft--;
-    timeEl.textContent = "Time :" + " " + secondsLeft;
+    if (secondsLeft > 0) {
+      secondsLeft--;
+      updateTime();
     }
 
     if (secondsLeft === 0) {
       clearInterval(timeInterval);
       endGame();
-      
+
     }
-      
+
   }, 1000);
- 
+
 }
 
 
@@ -44,7 +48,7 @@ questionsForQuiz = [{
   Q: "Which one of the following also known as Conditional Expression:",
   A: "immediate if",
   choices: [" Alternative to if-else", "Switch statement", "If-then-else statement", "immediate if"]
-}, 
+},
 {
   Q: "In JavaScript, what is a block of statement?",
   A: "block that combines a number of statements into a single compound statement",
@@ -57,7 +61,12 @@ questionsForQuiz = [{
 },
 {
   Q: "Which of the following type of a variable is volatile?",
-  A:"Volatile variable",
+  A: "Volatile variable",
+  choices: ["Mutable variable", "Dynamic variable", "Volatile variable", "Immutable variable"]
+},
+{
+  Q: "Which of the following type of a variable is volatile?",
+  A: "Volatile variable",
   choices: ["Mutable variable", "Dynamic variable", "Volatile variable", "Immutable variable"]
 }
 ];
@@ -65,7 +74,6 @@ questionsForQuiz = [{
 
 
 
-// // //created ul li and question areas//
 questions = document.querySelector(".questions");
 choices1 = document.querySelector(".choices1");
 answers = document.querySelector(".answer");
@@ -112,25 +120,26 @@ for (let i = 0; i < choicesForquiz.length; i++) {
     if (choicesForquiz[i].innerHTML === questionsForQuiz[questionNumbers].A) {
       answers.innerHTML = "Correct";
       answers.setAttribute("style", "color:green");
-      
-correctMsg.play();
-      
+      correctMsg.play();
       score++;
       scoreChange();
-    } else {
+    } 
+    else {
       answers.innerHTML = "Wrong";
       answers.setAttribute("style", "color:red");
       errorMsg.play();
-      if (secondsLeft< 10){
-          secondsLeft = 0;
-          
-      }else{ 
+      
+      if (secondsLeft < 10) {
+        secondsLeft = 0;
+
+      } else {
         secondsLeft -= 10;
+        scoreChange();
       }
-      timeEl.textContent = "Time :" + " " + secondsLeft;
-      scoreChange();
-      }
-  
+      updateTime();
+
+    }
+
     questionNumbers++;
     displayQuestionsChoices();
     endGame();
@@ -139,7 +148,7 @@ correctMsg.play();
 
 
 function scoreChange() {
-  scoresForGame.textContent = "You got"+ " "+ score + " "+"right"; 
+  scoresForGame.textContent = "You got" + " " + score + " " + "out of 5";
 }
 
 function startQuiz() {
@@ -149,52 +158,52 @@ function startQuiz() {
   displayQuestionsChoices();
   viewScore.classList.add("highscorepage-hide");
   viewScoreElement.classList.add("view-scoretime-hide");
-  
-  }
-  
+
+}
 
 
 
-function init(){
+
+function init() {
   gameFirstScreen.classList.remove("hide-gameinfo");
   startGamebutton.addEventListener("click", startQuiz);
   viewScoreElement.classList.remove("view-scoretime-hide");
-startGamebutton.addEventListener("click", function(){
-  startClick.play();
-})
- 
-  
+  startGamebutton.addEventListener("click", function () {
+    clicks.play();
+  })
+
+
 }
 
 
-function endGame(){
-if (questionNumbers === 4|| secondsLeft === 0 ){
-  finalPage.classList.remove("hide-ask-initial");
-  gameFirstScreen.classList.add("hide-gameinfo");
-  questionSections.classList.add("hide");
-  clearInterval(timeInterval);
-  showScore.innerHTML =  "your score is " + " "  + score +" "+ "and you have finished the quiz in " + secondsLeft+" "+"seconds";
+function endGame() {
+  if (questionNumbers === 5 || secondsLeft === 0) {
+    finalPage.classList.remove("hide-ask-initial");
+    gameFirstScreen.classList.add("hide-gameinfo");
+    questionSections.classList.add("hide");
+    clearInterval(timeInterval);
+    showScore.innerHTML = "your score is " + " " + score + " " + "and you have finished the quiz in " + secondsLeft + " " + "seconds";
+
+  }
 
 }
 
-}
-
-submitScore.addEventListener("click", function(event){
-event.preventDefault();
-clicks.play();
+submitScore.addEventListener("click", function (event) {
+  event.preventDefault();
+  clicks.play();
 
 
-if ( initialText.value === ""){
+  if (initialText.value === "") {
 
-  errorText.innerHTML = "Initial can not be blank"
+    errorText.innerHTML = "Initial can not be blank"
 
-}else{
-  saveData();
-  errorText.innerHTML = "successfully added your score "
-  setTimeout(function() {
-    displayViewscore ();
-  }, 1000)
-}
+  } else {
+    saveData();
+    errorText.innerHTML = "successfully added your score "
+    setTimeout(function () {
+      displayViewscore();
+    }, 1000)
+  }
 });
 
 
@@ -202,7 +211,7 @@ if ( initialText.value === ""){
 
 viewScoreElement.addEventListener("click", displayViewscore);
 
-function displayViewscore (){
+function displayViewscore() {
   gameFirstScreen.classList.add("hide-gameinfo");
   finalPage.classList.add("hide-ask-initial");
   questionSections.classList.add("hide");
@@ -217,28 +226,29 @@ var storedData = [];
 
 function displayScore() {
   var storedData = JSON.parse(localStorage.getItem("storedData")) || [];
-  storedData.sort(function(a, b) {
+  storedData.sort(function (a, b) {
     if (b.timeleft === a.timeleft) {
       return b.scores - a.scores;
     }
-    return b.timeleft - a.timeleft;});
+    return b.timeleft - a.timeleft;
+  });
 
-    
+
   for (var i = 0; i < storedData.length; i++) {
     var li = document.createElement("li");
-    
+
     li.setAttribute("style", " color:white; background: rgb(32, 32, 138); padding: 5px; margin:10px; border-radius: 10px;");
     li.textContent = storedData[i].initial + " finished the game in " + storedData[i].timeleft + " and scored " + storedData[i].scores + " points";
     highScore.appendChild(li);
-    li.setAttribute("id","deleteContents");
-    
-}
+    li.setAttribute("id", "deleteContents");
+
+  }
 
 }
 
 function saveData() {
   var storedData = JSON.parse(localStorage.getItem("storedData")) || [];
-  storedData.push ({
+  storedData.push({
     initial: initialText.value,
     scores: score,
     timeleft: secondsLeft
@@ -250,16 +260,16 @@ function saveData() {
 
 
 
-goBackButton.addEventListener("click", function(){
+goBackButton.addEventListener("click", function () {
   init();
   viewScore.classList.add("highscorepage-hide");
-  location. reload() 
+  location.reload()
   clicks.play();
 
 })
 
 
-clearScoreButton.addEventListener("click", function(){
+clearScoreButton.addEventListener("click", function () {
   localStorage.clear();
   clicks.play();
   highScore.remove();
@@ -268,7 +278,7 @@ clearScoreButton.addEventListener("click", function(){
 
 
 
- init();
+init();
 
 
 
