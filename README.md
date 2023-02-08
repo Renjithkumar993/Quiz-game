@@ -25,7 +25,7 @@ To accesss this website please visit https://renjithkumar993.github.io/Quiz-game
 Here is the completed application looks like and the functinality .
 
 
-
+![](./assets/Code%20Quiz.gif)
 
 
 

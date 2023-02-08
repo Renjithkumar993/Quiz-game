@@ -1,7 +1,7 @@
 
-var errorMsg = new Audio('./assets/negative_beeps-6008.mp3');
-var correctMsg = new Audio("./assets/correct-2-46134.mp3");
-var clicks = new Audio("./assets/interface-124464.mp3");
+var errorMsg = new Audio('./assets/wrongAudio.mp3');
+var correctMsg = new Audio("./assets/correctAudio.mp3");
+var clicks = new Audio("./assets/clickAudio.mp3");
 
 var score = 0;
 
