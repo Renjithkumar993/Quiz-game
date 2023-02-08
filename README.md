@@ -20,7 +20,7 @@ The website is built using HTML and CSS and mainly with Javascript.The website i
 
 
 ## Usage 
-To accesss this website please visit https://renjithkumar993.github.io/Quiz-game/
+To accesss this website/application to play Quiz please visit https://renjithkumar993.github.io/Quiz-game/
 
 Here is the completed application looks like and the functinality .
 
