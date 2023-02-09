@@ -237,8 +237,8 @@ function displayScore() {
   for (var i = 0; i < storedData.length; i++) {
     var li = document.createElement("li");
 
-    li.setAttribute("style", " color:white; background: rgb(32, 32, 138); padding: 5px; margin:10px; border-radius: 10px;");
-    li.textContent = storedData[i].initial + " finished the game in " + storedData[i].timeleft + " and scored " + storedData[i].scores + " points";
+    li.setAttribute("style", " color: rgb(32, 32, 138); padding: 5px; margin:10px;font-size:30px");
+    li.textContent = storedData[i].initial + " finished the game in " + storedData[i].timeleft  + " "+ "seconds" +" "+ "and scored " + storedData[i].scores + " points";
     highScore.appendChild(li);
     li.setAttribute("id", "deleteContents");
 
